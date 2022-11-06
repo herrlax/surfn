@@ -78,9 +78,7 @@ const createStyledFile = async (doc: vscode.TextDocument) => {
 };
 
 const styledElementFromClasses = (name: string, text: string) => {
-  let trimmedText = text.replace('"', '');
-  trimmedText = trimmedText.replace("'", '');
-
+  const trimmedText = text.replace(/("|')/g, '');
   const prefix = `\nexport const ${name} = tw.div\``;
   const classNames = trimmedText.split(' ').join('\n  ');
   const sufix = '`;\n';
