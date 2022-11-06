@@ -1,7 +1,7 @@
 {
   "name": "surfn",
-  "displayName": "surfn",
-  "description": "🏄‍♂️",
+  "displayName": "Surfn 🏄‍♂️",
+  "description": "Generates styled components from tailwind classNames using tailwind-styled-components",
   "version": "0.0.1",
   "engines": {
     "vscode": "^1.73.0"
@@ -10,14 +10,14 @@
     "Other"
   ],
   "activationEvents": [
-    "onCommand:surfn.surf"
+    "onCommand:extension.extract-styles"
   ],
   "main": "./out/extension.js",
   "contributes": {
     "commands": [
       {
-        "command": "surfn.surf",
-        "title": "Surf away!"
+        "command": "extension.extract-styles",
+        "title": "🏄‍♂️ Surfn: Generate styled components from selection"
       }
     ]
   },

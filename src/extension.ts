@@ -15,26 +15,29 @@ const {
 } = vscode;
 
 export function activate(context: vscode.ExtensionContext) {
-  const disposable = commands.registerCommand('surfn.surf', async () => {
-    if (!activeTextEditor || !workspace) {
-      showErrorMessage('Failed to init extension surfn');
-      return;
+  const disposable = commands.registerCommand(
+    'extension.extract-styles',
+    async () => {
+      if (!activeTextEditor || !workspace) {
+        showErrorMessage('Failed to init extension surfn');
+        return;
+      }
+
+      const { document, selection } = activeTextEditor;
+
+      const selectedText = document.getText(selection).trim();
+
+      const fileUri = await createStyledFile(document);
+
+      const doc = await workspace.openTextDocument(fileUri);
+      const editor = await showTextDocument(doc);
+
+      await insertImport(doc, editor);
+      await insertStyledElements(editor, selectedText);
+
+      showInformationMessage('Successfully created styled.ts 🏄‍♂️');
     }
-
-    const { document, selection } = activeTextEditor;
-
-    const selectedText = document.getText(selection).trim();
-
-    const fileUri = await createStyledFile(document);
-
-    const doc = await workspace.openTextDocument(fileUri);
-    const editor = await showTextDocument(doc);
-
-    await insertImport(doc, editor);
-    await insertStyledElements(editor, selectedText);
-
-    showInformationMessage('Successfully created styled.ts 🏄‍♂️');
-  });
+  );
 
   context.subscriptions.push(disposable);
 }
