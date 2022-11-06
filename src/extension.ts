@@ -77,25 +77,41 @@ const createStyledFile = async (doc: vscode.TextDocument) => {
   }
 };
 
+// matches className
+const TW_CLASS_REGEX = /className="[a-zA-Z0-9\s-:[\]\n]*"/g;
+// matches html tag
+const TAG_REGEX = /<[a-z0-9]*/g;
+
 const styledElementFromClasses = (name: string, text: string) => {
-  const trimmedText = text.replace(/("|')/g, '');
-  const prefix = `\nexport const ${name} = tw.div\``;
+  const tagMatch = text.match(TAG_REGEX);
+  const classesMatch = text.match(TW_CLASS_REGEX);
+
+  if (!tagMatch || !classesMatch) {
+    return '';
+  }
+
+  const tag = tagMatch[0].replace('<', '');
+  const classes = classesMatch[0];
+  const trimmedText = classes.replace(/[className=]*["|']/g, ''); // removes className= and ticks
+
+  const prefix = `\nexport const ${name} = tw.${tag}\``;
   const classNames = trimmedText.split(' ').join('\n  ');
   const sufix = '`;\n';
 
   return `${prefix}\n  ${classNames}\n${sufix}`;
 };
 
-const TW_CLASS_REGEX = /"[a-zA-Z0-9\s-:[\]\n]*"*/g;
+// matches a full html element with a className
+const FULL_ELEMENT_REGEX = /<[a-z0-9]*[^>]*className="[a-zA-Z0-9\s-:[\]\n]*"/g;
 
 const insertStyledElements = async (
   editor: vscode.TextEditor,
   text: string
 ) => {
-  const classMatches = text.match(TW_CLASS_REGEX) || [];
+  const elements = text.match(FULL_ELEMENT_REGEX) || [];
 
   return editor.edit(async builder => {
-    classMatches.forEach((match, idx) => {
+    elements.forEach((match, idx) => {
       builder.insert(
         new Position(editor.document.lineCount, 0),
         styledElementFromClasses(`StyledElement${idx + 1}`, match)
