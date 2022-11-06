@@ -45,5 +45,8 @@
   },
   "license": "MIT",
   "publisher": "herrlax",
-  "repository": "https://github.com/herrlax/surfn"
+  "repository": "https://github.com/herrlax/surfn",
+  "dependencies": {
+    "vscode-uri": "^3.0.6"
+  }
 }

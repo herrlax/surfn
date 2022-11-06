@@ -1803,6 +1803,11 @@ util-deprecate@~1.0.1:
   resolved "https://registry.yarnpkg.com/util-deprecate/-/util-deprecate-1.0.2.tgz#450d4dc9fa70de732762fbd2d4a28981419a0ccf"
   integrity sha512-EPD5q1uXyFxJpCrLnCc1nHnq3gOa6DZBocAIiI2TaSCA7VCJ1UJDMagCzIkXNsUYfD1daK//LTEQ8xiIbrHtcw==
 
+vscode-uri@^3.0.6:
+  version "3.0.6"
+  resolved "https://registry.yarnpkg.com/vscode-uri/-/vscode-uri-3.0.6.tgz#5e6e2e1a4170543af30151b561a41f71db1d6f91"
+  integrity sha512-fmL7V1eiDBFRRnu+gfRWTzyPpNIHJTc4mWnFkwBUmO9U3KPgJAmTx7oxi2bl/Rh6HLdU7+4C9wlj0k2E4AdKFQ==
+
 which-boxed-primitive@^1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/which-boxed-primitive/-/which-boxed-primitive-1.0.2.tgz#13757bc89b209b049fe5d86430e21cf40a89a8e6"
