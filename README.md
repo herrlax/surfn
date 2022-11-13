@@ -20,12 +20,8 @@ Now you're `tailwind` classes has been extracted as styled components using `tai
 
 This extention is only useful if you're using both `tailwind` and `tailwind-styled-component`.
 
-## Known Issues
-
-...
-
 ## Release Notes
 
 ### 0.0.1
 
-...
+Initial release
