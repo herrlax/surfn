@@ -22,6 +22,10 @@ This extention is only useful if you're using both `tailwind` and `tailwind-styl
 
 ## Release Notes
 
+### 0.0.2
+
+- Update icon
+
 ### 0.0.1
 
-Initial release
+- Initial release

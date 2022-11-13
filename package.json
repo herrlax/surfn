@@ -2,7 +2,7 @@
   "name": "surfn",
   "displayName": "Surfn 🏄‍♂️",
   "description": "Generates styled components from tailwind classNames using tailwind-styled-components",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "engines": {
     "vscode": "^1.73.0"
   },
@@ -38,6 +38,7 @@
     "eslint-plugin-react": "^7.31.10",
     "typescript": "^4.8.4"
   },
+  "icon": "img/icon.png",
   "license": "MIT",
   "publisher": "herrlax",
   "repository": "https://github.com/herrlax/surfn",
