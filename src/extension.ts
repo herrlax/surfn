@@ -81,9 +81,9 @@ const createStyledFile = async (doc: vscode.TextDocument) => {
 };
 
 // matches className
-const TW_CLASS_REGEX = /className="[a-zA-Z0-9\s-:[\]\n]*"/g;
+const TW_CLASS_REGEX = /(className=)("|')[a-zA-Z0-9\s\-:[\]\n]*("|')/g;
 // matches html tag
-const TAG_REGEX = /<[a-z0-9]*/g;
+const TAG_REGEX = /<[a-zA-Z0-9]*/g;
 
 const styledElementFromClasses = (name: string, text: string) => {
   const tagMatch = text.match(TAG_REGEX);
@@ -95,7 +95,7 @@ const styledElementFromClasses = (name: string, text: string) => {
 
   const tag = tagMatch[0].replace('<', '');
   const classes = classesMatch[0];
-  const trimmedText = classes.replace(/[className=]*["|']/g, ''); // removes className= and ticks
+  const trimmedText = classes.replace(/(className=)*("|')/g, ''); // removes className= and ticks
 
   const prefix = `\nexport const ${name} = tw.${tag}\``;
   const classNames = trimmedText.split(' ').join('\n  ');
@@ -105,7 +105,8 @@ const styledElementFromClasses = (name: string, text: string) => {
 };
 
 // matches a full html element with a className
-const FULL_ELEMENT_REGEX = /<[a-z0-9]*[^>]*className="[a-zA-Z0-9\s-:[\]\n]*"/g;
+const FULL_ELEMENT_REGEX =
+  /<[a-z0-9]*[^>]*(className=)("|')[a-zA-Z0-9\s\-:[\]\n]*("|')/g;
 
 const insertStyledElements = async (
   editor: vscode.TextEditor,
