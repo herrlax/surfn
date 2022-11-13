@@ -22,6 +22,10 @@ This extention is only useful if you're using both `tailwind` and `tailwind-styl
 
 ## Release Notes
 
+### 0.0.3
+
+- Fix bug with reading from multiple sources during the same session
+
 ### 0.0.2
 
 - Update icon

@@ -2,7 +2,7 @@
   "name": "surfn",
   "displayName": "Surfn 🏄‍♂️",
   "description": "Generates styled components from tailwind classNames using tailwind-styled-components",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "engines": {
     "vscode": "^1.73.0"
   },

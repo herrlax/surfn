@@ -1,23 +1,20 @@
 import * as vscode from 'vscode';
 import { URI } from 'vscode-uri';
 
-const {
-  commands,
-  window: {
-    activeTextEditor,
-    showInformationMessage,
-    showErrorMessage,
-    showTextDocument,
-    showInputBox,
-  },
-  workspace,
-  Position,
-} = vscode;
-
 export function activate(context: vscode.ExtensionContext) {
-  const disposable = commands.registerCommand(
+  const disposable = vscode.commands.registerCommand(
     'extension.extract-styles',
     async () => {
+      const {
+        window: {
+          activeTextEditor,
+          showInformationMessage,
+          showErrorMessage,
+          showTextDocument,
+        },
+        workspace,
+      } = vscode;
+
       if (!activeTextEditor || !workspace) {
         showErrorMessage('Failed to init extension surfn');
         return;
@@ -27,7 +24,7 @@ export function activate(context: vscode.ExtensionContext) {
 
       const selectedText = document.getText(selection).trim();
 
-      const fileUri = await createStyledFile(document);
+      const fileUri = await createStyledFile(document, workspace.fs);
 
       const doc = await workspace.openTextDocument(fileUri);
       const editor = await showTextDocument(doc);
@@ -44,8 +41,7 @@ export function activate(context: vscode.ExtensionContext) {
 
 // This method is called when your extension is deactivated
 export function deactivate() {
-  showTextDocument;
-  // TODO do something?
+  vscode.window.showTextDocument;
 }
 
 const getFilePath = async (documentPath: string) => {
@@ -56,7 +52,7 @@ const getFilePath = async (documentPath: string) => {
     .join('/');
   const defaultFileName = `styled${fileType}`;
 
-  const userInput = await showInputBox({
+  const userInput = await vscode.window.showInputBox({
     placeHolder: `Name of style file (defaults to ${defaultFileName})`,
   });
 
@@ -68,11 +64,14 @@ const getFilePath = async (documentPath: string) => {
 };
 
 // Creates a styled.ts file
-const createStyledFile = async (doc: vscode.TextDocument) => {
+const createStyledFile = async (
+  doc: vscode.TextDocument,
+  fs: vscode.FileSystem
+) => {
   const filePath = await getFilePath(doc.fileName);
 
   try {
-    await workspace.fs.stat(URI.file(filePath)); // check if file exists already
+    await fs.stat(URI.file(filePath)); // check if file exists already
     return URI.file(filePath);
   } catch (e) {
     // creates new file if it doesn't exist
@@ -117,7 +116,7 @@ const insertStyledElements = async (
   return editor.edit(async builder => {
     elements.forEach((match, idx) => {
       builder.insert(
-        new Position(editor.document.lineCount, 0),
+        new vscode.Position(editor.document.lineCount, 0),
         styledElementFromClasses(`StyledElement${idx + 1}`, match)
       );
     });
@@ -135,7 +134,7 @@ const insertImport = async (
 ) => {
   if (!doc.getText().includes(TWSC_IMPORT)) {
     return editor.edit(builder => {
-      builder.insert(new Position(0, 0), `${TWSC_IMPORT}\n`);
+      builder.insert(new vscode.Position(0, 0), `${TWSC_IMPORT}\n`);
     });
   }
 
